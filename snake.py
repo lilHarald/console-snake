@@ -28,9 +28,11 @@ food = set_food()
 
 snake_index = 0
 
-os.system("mode con: cols=" + str(int(BOARD_SIZE * 3.2)) + "lines=" + str(int(BOARD_SIZE * 1.15)))
+os.system("mode con: cols=" + str(int(BOARD_SIZE * 3.2)) + "lines=" + str(int(BOARD_SIZE * 1.2)))
 
 time.sleep(0.5)
+
+score = 0
 
 old_time = time.time()
 loop_timer = 0
@@ -60,6 +62,7 @@ while True:
             snake.remove(last_part)
         else:
             food = set_food()
+            score += 1
         snake.append(new_part)
         if len(snake) != len(set(snake)) or \
                 new_part[0] < 0 or new_part[0] > BOARD_SIZE - 1 or new_part[1] < 0 or new_part[1] > BOARD_SIZE - 1:
@@ -68,7 +71,7 @@ while True:
         for coords in snake:
             board[coords[1]] = board[coords[1]][:coords[0] * 3] + "ORM" + board[coords[1]][coords[0] * 3 + 3:]
         board[food[1]] = board[food[1]][:food[0] * 3] + "MAT" + board[food[1]][food[0] * 3 + 3:]
-        board = " " + "___" * BOARD_SIZE + "__\n |" + "|\n |".join(board) + "|\n ¯¯" + "¯¯¯" * BOARD_SIZE
+        board = " Score:  " + str(score) + "\n " + "___" * BOARD_SIZE + "__\n |" + "|\n |".join(board) + "|\n ¯¯" + "¯¯¯" * BOARD_SIZE
         print(board)
 
-print(" YOU DIED\n" * BOARD_SIZE)
+print((" YOU DIED! Final Score: " + str(score) + "\n") * BOARD_SIZE)
